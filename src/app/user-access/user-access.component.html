@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="container-board">
+        <div class="row">
+            <div class="col">
+                <h2 class="game-title">The Minesweeper</h2>
+            </div>
+        </div>
+        <mat-card class="user-access-card">
+            <mat-card-content>
+                <mat-tab-group animationDuration="0ms">
+                    <mat-tab label="Sign In">
+                        <form [formGroup]="userCredentials">
+                            <div class="row">
+                                <div class="col">
+                                    <input id="username" type="text" class="form-control" placeholder="Username" formControlName="username" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input id="password" type="password" class="form-control" placeholder="Password" formControlName="password" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button mat-flat-button color="accent" (click)="signIn()">Enter</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-tab>
+                    <mat-tab label="Sign Up">
+                        <form [formGroup]="userRegistration">
+                            <div class="row">
+                                <div class="col">
+                                    <input id="username" type="text" class="form-control" placeholder="Username" formControlName="username" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input id="password" type="password" class="form-control" placeholder="Password" formControlName="password" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <input id="passwordConfirmation" type="password" class="form-control" placeholder="Confirm password" formControlName="passwordConfirmation"
+                                    [matTooltip]="isPasswordConfirmed() ? '' : 'Password does not match'"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button mat-flat-button color="accent" (click)="register()" [disabled]="!isPasswordConfirmed()">Register</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
