@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serverUrl: "https://dg-minesweeper-server.herokuapp.com/"
+  serverUrl: "https://dg-minesweeper-server.herokuapp.com"
 };
