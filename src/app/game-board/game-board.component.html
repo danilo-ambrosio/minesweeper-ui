@@ -40,7 +40,8 @@
       <div class="board" *ngIf="hasOngoingGame()">
         <div class="row" *ngFor="let row of game.rows;">
           <div *ngFor="let cell of row.cells;" [class]="cell.resolveStyleClass()"
-            (click)="handleCellOperation(row.index, cell.index)">
+            (click)="uncoverCell(row, cell)" 
+            (contextmenu)="placeCellIndicator(row, cell, $event)">
             {{cell.mines > 0 ? cell.mines : ""}}
           </div>
         </div>

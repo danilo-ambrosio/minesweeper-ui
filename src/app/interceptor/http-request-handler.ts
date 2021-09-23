@@ -40,7 +40,7 @@ export class HttpRequestHandler implements HttpInterceptor {
 
     checkUserAuthentication(request: HttpRequest<any>, response: HttpResponse<any>) {
         if (request.method == "GET" && request.url.startsWith(this.userService.enpoint())) {
-            this.userService.defineCurrentUser(response.body);
+            this.userService.manageAuthenticatedUser(response.body);
         }
     }
 

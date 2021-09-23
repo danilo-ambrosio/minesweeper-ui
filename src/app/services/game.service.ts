@@ -22,6 +22,6 @@ export class GameService {
   }
 
   performCellOperation(gameId: string, cellOperation: CellOperation) {
-    return this.http.post<any>(`${this.endpoint}/${gameId}`, cellOperation);
+    return this.http.patch<any>(`${this.endpoint}/${gameId}/cell`, cellOperation);
   }
 }

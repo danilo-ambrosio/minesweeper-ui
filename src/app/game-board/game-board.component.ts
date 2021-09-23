@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Cell } from '../model/Cell';
+import { Cell } from '../model/cell/Cell';
 import { Game } from '../model/Game';
 import { Preferences } from '../model/Preferences';
 import { Row } from '../model/Row';
 import { GameService } from '../services/game.service';
+import { MouseClick } from '../model/cell/MouseClick';
+import { CellOperationBuilder } from '../model/cell/CellOperationBuilder';
 
 @Component({
   selector: 'app-game-board',
@@ -17,8 +18,8 @@ export class GameBoardComponent implements OnInit {
   preferences: Preferences;
 
   constructor(private gameService: GameService) {
+    this.game = Game.empty();
     this.preferences = new Preferences(3, 5, 7);
-    this.game = new Game("","",0, new Array<Row>());
   }
 
   ngOnInit(): void {
@@ -31,8 +32,18 @@ export class GameBoardComponent implements OnInit {
     });
   }
 
-  handleCellOperation(rowIndex: number, cellIndex: number) {
-    console.log(rowIndex + " " + cellIndex);
+  uncoverCell(row: Row, cell: Cell) {
+    if(cell.status != Cell.Status.UNCOVERED) {
+      const cellOperation = CellOperationBuilder.build(row.index, cell.index, cell.status, 10, MouseClick.Left);
+      this.gameService.performCellOperation(this.game.id, cellOperation).subscribe((updatedGame) =>{
+        this.game = Game.from(updatedGame);
+      });
+    }
+  }
+
+  placeCellIndicator(row: Row, cell: Cell, mouseEvent: MouseEvent) {
+    mouseEvent.preventDefault();
+
   }
 
   hasOngoingGame() {

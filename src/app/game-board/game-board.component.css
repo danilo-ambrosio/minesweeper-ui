@@ -38,15 +38,24 @@ button {
     cursor: default;
 }
 
-.covered-cell {
+.cell {
     width: 40px;
     height: 40px;
-    cursor: pointer;
     border: 2px;
     border-style: outset;
     background-color: lightgray;
 }
 
-.covered-cell:hover {
+.covered {
+    cursor: pointer;
+    border-style: outset;
+}
+
+.covered:hover {
     background-color: lightslategray;
 }
+
+.uncovered {
+    border-style: inset;
+}
+

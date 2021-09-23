@@ -22,7 +22,7 @@ export class UserService {
     return this.http.post<any>(this.endpoint, user);
   }
 
-  defineCurrentUser(user: User) {
+  manageAuthenticatedUser(user: User) {
     this.localStorageService.set(UserService.STORAGE_KEY, user);
   }
 

@@ -1,9 +1,12 @@
-import { Cell } from "./Cell";
+import { Cell } from "./cell/Cell";
 import { Preferences } from "./Preferences";
 import { Row } from "./Row";
 
 export class Game {
     
+    static empty() : Game {
+        return new Game("","",0, new Array<Row>()); 
+    }
     
     constructor(public id: string, public status: string, public timeElapsed: number, public rows: Array<Row>) {
         this.rows = rows;
