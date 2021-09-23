@@ -1,10 +1,5 @@
 <div class="container">
     <div class="container-board">
-        <div class="row">
-            <div class="col">
-                <h2 class="game-title">The Minesweeper</h2>
-            </div>
-        </div>
         <mat-card class="user-access-card">
             <mat-card-content>
                 <mat-tab-group animationDuration="0ms">
@@ -22,7 +17,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <button mat-flat-button color="accent" (click)="signIn()">Enter</button>
+                                    <button mat-flat-button color="accent" (click)="signIn()" [disabled]="shouldDisableAuthentication()">Enter</button>
                                 </div>
                             </div>
                         </form>
@@ -47,7 +42,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <button mat-flat-button color="accent" (click)="register()" [disabled]="!isPasswordConfirmed()">Register</button>
+                                    <button mat-flat-button color="accent" (click)="register()" [disabled]="shouldDisableRegistration()">Register</button>
                                 </div>
                             </div>
                         </form>
@@ -56,4 +51,8 @@
             </mat-card-content>
         </mat-card>
     </div>
+</div>
+<div class="fixed-bottom">
+    <p class="game-title">Minesweeper Game</p>
+    <p class="developer">Created by Danilo Ambrósio</p>
 </div>

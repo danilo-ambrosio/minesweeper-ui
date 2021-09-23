@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { PasswordConfirmation } from '../helpers/password-confirmation.validator';
+import { LoaderState } from '../loader/loader-state';
 import { User } from '../model/User';
+import { LoaderService } from '../services/loader.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -15,10 +18,13 @@ export class UserAccessComponent implements OnInit {
 
   userCredentials: FormGroup;
   userRegistration: FormGroup;
-
+  subscription: Subscription;
+  processing: Boolean;
+  
   constructor(private formBuilder: FormBuilder,
               private userService: UserService, 
               private toastrService: ToastrService, 
+              private loaderService: LoaderService,
               private router: Router) {
     this.userCredentials = this.formBuilder.group({
       username: ['', Validators.required],
@@ -30,9 +36,17 @@ export class UserAccessComponent implements OnInit {
       password: ['', Validators.required],
       passwordConfirmation: ['']
     }, {validator: PasswordConfirmation('password', 'passwordConfirmation')});
+
+    this.subscription = this.loaderService.loaderState.subscribe((state: LoaderState) => {
+      this.processing = state.show;
+    });
    }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   signIn() {
@@ -82,8 +96,15 @@ export class UserAccessComponent implements OnInit {
     }
   }
 
+  shouldDisableAuthentication() {
+    return this.processing;
+  }
+
+  shouldDisableRegistration() {
+    return this.processing || this.userRegistration.controls.passwordConfirmation.errors;
+  }
+
   isPasswordConfirmed() {
     return !this.userRegistration.controls.passwordConfirmation.errors;
   }
-
 }

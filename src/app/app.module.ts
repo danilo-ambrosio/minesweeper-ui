@@ -15,6 +15,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoaderComponent } from './loader/loader.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpRequestHandler } from './interceptor/http-request-handler';
+import { MatSidenavModule }  from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { HttpRequestHandler } from './interceptor/http-request-handler';
     MatCardModule,
     MatTabsModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule, 
+    MatSidenavModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

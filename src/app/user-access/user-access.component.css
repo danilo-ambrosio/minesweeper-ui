@@ -1,10 +1,15 @@
 .container {
-    margin-top: 100px;
+    margin-top: 200px;
 }
 
 .game-title {
-    text-transform: uppercase;
-    text-align: center;
+    text-align: right;
+    font-size: 30px;
+}
+
+.developer {
+    text-align: right;
+    font-size: 12px;
 }
 
 .user-access-card {
@@ -22,18 +27,7 @@
     margin-bottom: 6px;
 }
 
-.user-access-card button {
+button {
     width: 100%;
 }
 
-::-webkit-input-placeholder {
-    font-size: 12px;
- }
- 
- :-moz-placeholder { /* Firefox 18- */
-    font-size: 12px;
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-    font-size: 12px;
-}

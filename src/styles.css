@@ -1,5 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #fafafa;}
 .form-control { font-size: 12px; }
+
+button {
+    color: white !important;
+    background: #3f51b5 !important;
+}
+
+.mat-ink-bar {
+    background-color: #3f51b5 !important;
+}
+
+button:disabled {
+    background: gray !important;
+}
+
+::-webkit-input-placeholder {
+    font-size: 12px;
+ }
+ 
+ :-moz-placeholder { /* Firefox 18- */
+    font-size: 12px;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    font-size: 12px;
+}
+
