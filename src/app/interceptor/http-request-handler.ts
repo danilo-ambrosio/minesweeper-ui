@@ -19,7 +19,7 @@ import { UserService } from '../services/user.service';
 })
 export class HttpRequestHandler implements HttpInterceptor {
 
-    constructor(private toastrService: ToastrService, 
+    constructor(private toastrService: ToastrService,
         private loaderService: LoaderService,
         private userService: UserService) {
 
@@ -27,21 +27,19 @@ export class HttpRequestHandler implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.showLoader();
-        if(this.userService.hasAuthenticatedUser()) {
-            request.headers.append("userId", this.userService.authenticatedUser().id);
-        }
-        return next.handle(request).pipe(tap((event: HttpEvent<any>) => { 
+        const preparedRequest = this.prepareRequest(request);
+        return next.handle(preparedRequest).pipe(tap((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
-              this.hideLoader();
-              this.checkUserAuthentication(request, event);
+                this.hideLoader();
+                this.checkUserAuthentication(request, event);
             }
-          },(error: HttpErrorResponse) => {
-              this.handleError(error);
-          }));
+        }, (error: HttpErrorResponse) => {
+            this.handleError(error);
+        }));
     }
 
     checkUserAuthentication(request: HttpRequest<any>, response: HttpResponse<any>) {
-        if(request.method == "GET" && request.url.startsWith(this.userService.enpoint())) {
+        if (request.method == "GET" && request.url.startsWith(this.userService.enpoint())) {
             this.userService.defineCurrentUser(response.body);
         }
     }
@@ -49,7 +47,7 @@ export class HttpRequestHandler implements HttpInterceptor {
     handleError(error: HttpErrorResponse) {
         this.hideLoader();
         console.log(error);
-        if(error.status === 500) {
+        if (error.status === 500) {
             this.toastrService.error("The requested operation failed.");
         }
     }
@@ -61,5 +59,14 @@ export class HttpRequestHandler implements HttpInterceptor {
     private hideLoader(): void {
         this.loaderService.hide();
     }
-    
+
+    private prepareRequest(request: HttpRequest<any>): HttpRequest<any> {
+        if (this.userService.hasAuthenticatedUser()) {
+            const userId = this.userService.authenticatedUserId();
+            const headers = request.headers.append("userId", userId);
+            return request.clone({ headers: headers });
+        }
+        return request;
+    }
+
 }

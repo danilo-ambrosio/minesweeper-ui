@@ -1,0 +1,52 @@
+mat-card-header {
+    margin-bottom: 10px;
+}
+
+button {
+    margin-right: 10px;
+}
+
+.container {
+    margin-top: 100px;
+}
+
+.game {
+    margin: auto;
+    width: 800px;
+    height: 400px;
+}
+
+.board {
+    padding-top: 10px;
+    padding-left: 10px;
+    width: 300px;
+    height: 200px;
+}
+
+.start-message {
+    text-align: center;
+    padding-top: 80px;
+    font-size: 20px !important;
+}
+
+.start-message button {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+
+.clock {
+    cursor: default;
+}
+
+.covered-cell {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border: 2px;
+    border-style: outset;
+    background-color: lightgray;
+}
+
+.covered-cell:hover {
+    background-color: lightslategray;
+}

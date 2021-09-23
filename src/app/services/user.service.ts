@@ -34,8 +34,8 @@ export class UserService {
     return this.localStorageService.has(UserService.STORAGE_KEY);
   }
 
-  authenticatedUser() : User {
-    return this.localStorageService.get(UserService.STORAGE_KEY);
+  authenticatedUserId() : string {
+    return this.localStorageService.get(UserService.STORAGE_KEY).id;
   }
 
   enpoint() {

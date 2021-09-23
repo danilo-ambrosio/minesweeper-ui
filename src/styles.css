@@ -9,12 +9,25 @@ button {
     background: #3f51b5 !important;
 }
 
+.mat-menu-content button {
+    color: gray !important;
+    background: #fafafa !important;
+}
+
 .mat-ink-bar {
     background-color: #3f51b5 !important;
 }
 
 button:disabled {
     background: gray !important;
+}
+
+.mat-card-header-text {
+    margin: 0 !important; 
+}
+
+.mat-drawer-content {
+    overflow: hidden  !important; 
 }
 
 ::-webkit-input-placeholder {

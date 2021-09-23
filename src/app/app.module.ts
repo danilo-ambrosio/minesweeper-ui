@@ -15,7 +15,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoaderComponent } from './loader/loader.component';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpRequestHandler } from './interceptor/http-request-handler';
-import { MatSidenavModule }  from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -35,8 +40,13 @@ import { MatSidenavModule }  from '@angular/material/sidenav';
     MatCardModule,
     MatTabsModule,
     MatButtonModule,
-    MatTooltipModule, 
-    MatSidenavModule
+    MatTooltipModule,
+    MatMenuModule,
+    MatIconModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
