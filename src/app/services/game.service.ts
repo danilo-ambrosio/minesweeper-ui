@@ -21,11 +21,15 @@ export class GameService {
     return this.http.post<any>(this.endpoint, preferences);
   }
 
-  performCellOperation(gameId: string, cellOperation: CellOperation) {
+  performCellOperation(gameId: string, cellOperation: CellOperation) : Observable<any> {
     return this.http.patch<any>(`${this.endpoint}/${gameId}/cell`, cellOperation);
   }
 
-  changeStatus(gameId: string, statusTransition: GameStatusTransition) {
+  changeStatus(gameId: string, statusTransition: GameStatusTransition) : Observable<any> {
     return this.http.patch<any>(`${this.endpoint}/${gameId}/status`, statusTransition);
+  }
+
+  query() : Observable<any> {
+    return this.http.get<any>(this.endpoint);
   }
 }

@@ -5,16 +5,21 @@ import { Row } from "./Row";
 export class Game {
     
     static empty() : Game {
-        return new Game("","",0, new Array<Row>()); 
+        return new Game("", "", 0,
+         0, new Array<Row>()); 
     }
     
-    constructor(public id: string, public status: string, public timeElapsed: number, public rows: Array<Row>) {
+    constructor(public id: string, public status: string, public startedOn: number, public timeElapsed: number, public rows: Array<Row>) {
         this.rows = rows;
+    }
+
+    public static fromAll(games: Array<Game>) {
+        return games.map(game => Game.from(game));
     }
 
     public static from(game: Game) : Game {
         const rows = Row.from(game.rows);
-        return new Game(game.id, game.status, game.timeElapsed, rows);
+        return new Game(game.id, game.status, game.startedOn, game.timeElapsed, rows);
     }   
 
     generatePlaceholderCells(preferences: Preferences) {
@@ -41,5 +46,9 @@ export class Game {
 
     isEmpty() : Boolean {
         return this.status === "";
+    }
+
+    startedOnDate() : Date {
+        return new Date(this.startedOn);
     }
 }

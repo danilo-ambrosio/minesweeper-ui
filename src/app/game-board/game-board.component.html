@@ -11,7 +11,7 @@
       <button mat-icon-button matTooltip="Stop and Save" (click)="stop()" [disabled]="!hasOngoingGame()">
         <mat-icon>stop</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Restore Game" [disabled]="hasOngoingGame()">
+      <button mat-icon-button matTooltip="Restore Game" (click)="openGameList()" [disabled]="hasOngoingGame()">
         <mat-icon>library_books</mat-icon>
       </button>
       <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Game Preferences" [disabled]="hasOngoingGame()">

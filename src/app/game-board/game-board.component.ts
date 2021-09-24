@@ -10,8 +10,9 @@ import { CellOperation } from '../model/cell/CellOperation';
 import { ToastrService } from 'ngx-toastr';
 import { GameStatusTransition } from '../model/GameStatusTransition';
 import { Timer } from '../helpers/Timer';
-import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { GameListDialogComponent } from '../game-list-dialog/game-list-dialog.component';
 
 @Component({
   selector: 'app-game-board',
@@ -25,7 +26,10 @@ export class GameBoardComponent implements OnInit {
   timer: Timer;
   username: string;
 
-  constructor(private gameService: GameService, private toastrService: ToastrService, private userService: UserService, private router: Router) {
+  constructor(private gameService: GameService, 
+              private toastrService: ToastrService,
+              private userService: UserService, 
+              public dialog: MatDialog) {
     this.clear();
     this.username = this.userService.authenticatedUsername();
   }
@@ -46,10 +50,11 @@ export class GameBoardComponent implements OnInit {
     });
   }
 
-  resume() {
+  resume(gameId) {
     const statusTransition = new GameStatusTransition("GAME_CONTINUATION");
-    this.gameService.changeStatus(this.game.id, statusTransition).subscribe((resumedGame) => {
+    this.gameService.changeStatus(gameId, statusTransition).subscribe((resumedGame) => {
       this.game = Game.from(resumedGame);
+      this.timer = this.timer.start(this.game.timeElapsed);
     });
   }
 
@@ -77,6 +82,16 @@ export class GameBoardComponent implements OnInit {
   dispatchCellOperation(cellOperation: CellOperation) {
     this.gameService.performCellOperation(this.game.id, cellOperation).subscribe((updatedGame) => {
       this.handleUpdatedGame(updatedGame);
+    });
+  }
+
+  openGameList() {
+    const dialogRef = this.dialog.open(GameListDialogComponent);
+
+    dialogRef.afterClosed().subscribe(selectedGame => {
+      if(selectedGame) {
+        this.resume(selectedGame.id);
+      }
     });
   }
 

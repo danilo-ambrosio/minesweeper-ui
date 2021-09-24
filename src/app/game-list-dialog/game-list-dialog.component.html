@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Select a game to restore</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let game of games" (click)="selectGame(game)">
+          Game started on {{ game.startedOnDate() | date:'yyyy-MM-dd HH:mm:ss' }}
+        </mat-list-option>
+      </mat-selection-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="selectedGame">Ok</button>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

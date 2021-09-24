@@ -21,12 +21,16 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
+import { GameListDialogComponent } from './game-list-dialog/game-list-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserAccessComponent,
     GameBoardComponent,
+    GameListDialogComponent,
     LoaderComponent
   ],
   imports: [
@@ -46,7 +50,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDividerModule,
     MatSidenavModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
+    MatListModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
