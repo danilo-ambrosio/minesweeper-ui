@@ -5,4 +5,8 @@ export class Preferences {
         this.columns = columns;
         this.numberOfMines = numberOfMines;
     }
+
+    public minesLimit() : Number {
+        return Math.ceil((this.rows.valueOf() * this.columns.valueOf()) * 0.7); 
+    }
 }

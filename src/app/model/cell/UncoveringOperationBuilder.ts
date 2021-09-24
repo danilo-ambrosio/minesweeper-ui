@@ -10,7 +10,7 @@ export class UncoveringOperationBuilder implements CellOperationBuilder {
     }
 
     canBuild(cellStatus: string, mouseEvent: MouseClick): Boolean {
-        return MouseClick.Left === mouseEvent && Cell.Status.COVERED === cellStatus;
+        return MouseClick.Left === mouseEvent && Cell.Status.UNCOVERED != cellStatus;
     }
 
 }

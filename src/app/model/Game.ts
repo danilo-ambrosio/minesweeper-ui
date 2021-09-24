@@ -26,4 +26,20 @@ export class Game {
             this.rows.push(row);
         }
     }
+
+    isWon() : Boolean {
+        return this.status === "WON";
+    }
+
+    isLost() : Boolean {
+        return this.status === "LOST";
+    }
+
+    isOver() : Boolean {
+        return this.isWon() || this.isLost() || this.isEmpty();
+    }
+
+    isEmpty() : Boolean {
+        return this.status === "";
+    }
 }

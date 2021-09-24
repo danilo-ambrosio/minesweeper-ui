@@ -1,11 +1,14 @@
 <div class="container">
   <mat-card class="game">
+
     <mat-card-header>
+
       <button mat-flat-button class="clock">00:00</button>
-      <button mat-icon-button matTooltip="Start Game" (click)="start()" [disabled]="hasOngoingGame()">
+
+      <button mat-icon-button matTooltip="Start/Reset Game" (click)="start()" [disabled]="hasOngoingGame()">
         <mat-icon>play_arrow</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Continue it later" [disabled]="!hasOngoingGame()">
+      <button mat-icon-button matTooltip="Pause and Save" [disabled]="!hasOngoingGame()">
         <mat-icon>stop</mat-icon>
       </button>
       <button mat-icon-button matTooltip="Load Game" [disabled]="hasOngoingGame()">
@@ -14,49 +17,62 @@
       <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Game Preferences" [disabled]="hasOngoingGame()">
         <mat-icon>more_vert</mat-icon>
       </button>
+
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="$event.stopPropagation()">
           <mat-form-field appearance="fill">
             <mat-label>Rows</mat-label>
-            <input matInput type="number" min="3" max="10" [(ngModel)]="preferences.rows"/>
+            <input matInput type="number" min="3" max="15" [(ngModel)]="preferences.rows" />
           </mat-form-field>
         </button>
         <button mat-menu-item (click)="$event.stopPropagation()">
           <mat-form-field appearance="fill">
             <mat-label>Columns</mat-label>
-            <input matInput type="number" min="3" max="10" [(ngModel)]="preferences.columns"/>
+            <input matInput type="number" min="3" max="23++-
+            ' 1QAW
+            
+            " [(ngModel)]="preferences.columns" />
           </mat-form-field>
         </button>
         <button mat-menu-item (click)="$event.stopPropagation()">
           <mat-form-field appearance="fill">
             <mat-label>Mines</mat-label>
-            <input matInput type="number" min="3" [(ngModel)]="preferences.numberOfMines"/>
+            <input matInput type="number" min="3" [max]="preferences.minesLimit()" [(ngModel)]="preferences.numberOfMines" />
           </mat-form-field>
         </button>
       </mat-menu>
+
     </mat-card-header>
+
     <mat-divider></mat-divider>
+
     <mat-card-content>
-      <div class="board" *ngIf="hasOngoingGame()">
+
+      <div class="board" *ngIf="hasGame()">
         <div class="row" *ngFor="let row of game.rows;">
-          <div *ngFor="let cell of row.cells;" [class]="cell.resolveStyleClass()"
-            (click)="uncoverCell(row, cell)" 
-            (contextmenu)="placeCellIndicator(row, cell, $event)">
-            {{cell.mines > 0 ? cell.mines : ""}}
+          <div *ngFor="let cell of row.cells;" [class]="cell.resolveStyleClass()" (click)="uncoverCell(row, cell)"
+            (contextmenu)="placeCellIndicator(row, cell, $event)" [matTooltip]="cell.resolveTooltip()">
+            <div [hidden]="!cell.hasIcon()" class="cell-icon">
+              <mat-icon>{{cell.resolveIconName()}}</mat-icon>
+            </div>
+            <span class="mineAlert" [hidden]="!cell.hasMines()">{{cell.mines}}</span>
           </div>
         </div>
+
       </div>
-      <p class="start-message" *ngIf="!hasOngoingGame()">
-        Click 
+
+      <p class="start-message" *ngIf="!hasGame()">
+        Click
         <button mat-icon-button>
           <mat-icon>more_vert</mat-icon>
-        </button> 
+        </button>
         to set the game preferences. <br>
         Then, start the game on
         <button mat-icon-button>
           <mat-icon>play_arrow</mat-icon>
         </button>.
       </p>
+
     </mat-card-content>
     <mat-card-actions>
 
