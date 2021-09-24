@@ -25,4 +25,8 @@ export class GameListDialogComponent implements OnInit {
   selectGame(game: Game) {
     this.selectedGame = game;
   }
+
+  resolveDialogTitle() {
+    return this.games.length === 0 ? "There is no preserved game." : "Select a game to restore";
+  }
 }
