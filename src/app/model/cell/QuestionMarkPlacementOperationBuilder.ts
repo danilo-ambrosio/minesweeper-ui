@@ -8,8 +8,8 @@ export class QuestionMarkPlacementOperationBuilder implements CellOperationBuild
     constructor() {
     }
     
-    build(rowIndex: Number, cellIndex: Number, timeElapsed: Number): CellOperation {
-        return new CellOperation(rowIndex, cellIndex, CellOperation.QUESTION_MARK_PLACEMENT, timeElapsed);
+    build(rowIndex: Number, cellIndex: Number): CellOperation {
+        return new CellOperation(rowIndex, cellIndex, CellOperation.QUESTION_MARK_PLACEMENT);
     }
 
     canBuild(cellStatus: string, mouseEvent: MouseClick): Boolean {

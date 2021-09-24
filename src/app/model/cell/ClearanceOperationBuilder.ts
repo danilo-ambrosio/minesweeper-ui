@@ -5,8 +5,8 @@ import { Cell } from "./Cell";
 
 export class ClearanceOperationBuilder implements CellOperationBuilder {
 
-    build(rowIndex: Number, cellIndex: Number, timeElapsed: Number): CellOperation {
-        return new CellOperation(rowIndex, cellIndex, CellOperation.CLEARANCE, timeElapsed);
+    build(rowIndex: Number, cellIndex: Number): CellOperation {
+        return new CellOperation(rowIndex, cellIndex, CellOperation.CLEARANCE);
     }
 
     canBuild(cellStatus: string, mouseEvent: MouseClick): Boolean {

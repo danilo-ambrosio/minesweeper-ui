@@ -23,6 +23,10 @@ button {
     height: 600px;
 }
 
+.spacer {
+    flex: 1 1 auto;
+}
+
 .start-message {
     text-align: center;
     padding-top: 80px;

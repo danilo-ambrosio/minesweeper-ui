@@ -5,8 +5,8 @@ import { Cell } from "./Cell";
 
 export class UncoveringOperationBuilder implements CellOperationBuilder {
 
-    build(rowIndex: Number, cellIndex: Number, timeElapsed: Number): CellOperation {
-        return new CellOperation(rowIndex, cellIndex, CellOperation.UNCOVERING, timeElapsed);
+    build(rowIndex: Number, cellIndex: Number): CellOperation {
+        return new CellOperation(rowIndex, cellIndex, CellOperation.UNCOVERING);
     }
 
     canBuild(cellStatus: string, mouseEvent: MouseClick): Boolean {

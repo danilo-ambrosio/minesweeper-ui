@@ -9,11 +9,11 @@ export abstract class CellOperationBuilder {
 
     public static readonly ALL = new Array<CellOperationBuilder>(new ClearanceOperationBuilder(), new UncoveringOperationBuilder(), new FlagPlacementOperationBuilder(), new QuestionMarkPlacementOperationBuilder());
 
-    static build(rowIndex: Number, cellIndex: Number, cellStatus: string, timeElapsed: Number, mouseClick: MouseClick) : CellOperation {
-        return CellOperationBuilder.ALL.filter(builder => builder.canBuild(cellStatus, mouseClick)).pop().build(rowIndex, cellIndex, timeElapsed);
+    static build(rowIndex: Number, cellIndex: Number, cellStatus: string, mouseClick: MouseClick) : CellOperation {
+        return CellOperationBuilder.ALL.filter(builder => builder.canBuild(cellStatus, mouseClick)).pop().build(rowIndex, cellIndex);
     }
 
-    abstract build(rowIndex: Number, cellIndex: Number, timeElapsed: Number): CellOperation;
+    abstract build(rowIndex: Number, cellIndex: Number): CellOperation;
 
     abstract canBuild(cellStatus: string, mouseEvent: MouseClick) : Boolean;
 

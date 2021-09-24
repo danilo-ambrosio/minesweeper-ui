@@ -38,6 +38,14 @@ export class UserService {
     return this.localStorageService.get(UserService.STORAGE_KEY).id;
   }
 
+  authenticatedUsername() : string {
+    return this.localStorageService.get(UserService.STORAGE_KEY).username;
+  }
+
+  removeAuthenticatedUser() {
+    this.localStorageService.remove(UserService.STORAGE_KEY);
+  }
+
   enpoint() {
     return this.endpoint;
   }

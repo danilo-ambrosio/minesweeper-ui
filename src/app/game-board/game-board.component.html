@@ -3,15 +3,15 @@
 
     <mat-card-header>
 
-      <button mat-flat-button class="clock">00:00</button>
+      <button mat-flat-button class="clock">{{ timer.minutes | number:'2.0' }}:{{ timer.seconds | number:'2.0' }}</button>
 
       <button mat-icon-button matTooltip="Start/Reset Game" (click)="start()" [disabled]="hasOngoingGame()">
         <mat-icon>play_arrow</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Pause and Save" [disabled]="!hasOngoingGame()">
+      <button mat-icon-button matTooltip="Stop and Save" (click)="stop()" [disabled]="!hasOngoingGame()">
         <mat-icon>stop</mat-icon>
       </button>
-      <button mat-icon-button matTooltip="Load Game" [disabled]="hasOngoingGame()">
+      <button mat-icon-button matTooltip="Restore Game" [disabled]="hasOngoingGame()">
         <mat-icon>library_books</mat-icon>
       </button>
       <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Game Preferences" [disabled]="hasOngoingGame()">
@@ -28,10 +28,7 @@
         <button mat-menu-item (click)="$event.stopPropagation()">
           <mat-form-field appearance="fill">
             <mat-label>Columns</mat-label>
-            <input matInput type="number" min="3" max="23++-
-            ' 1QAW
-            
-            " [(ngModel)]="preferences.columns" />
+            <input matInput type="number" min="3" max="23" [(ngModel)]="preferences.columns" />
           </mat-form-field>
         </button>
         <button mat-menu-item (click)="$event.stopPropagation()">
@@ -41,6 +38,17 @@
           </mat-form-field>
         </button>
       </mat-menu>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button>
+        <mat-icon [matTooltip]="userTooltip()">account_circle</mat-icon>
+      </button>
+
+      <button mat-icon-button>
+        <mat-icon matTooltip="Log out" (click)="logout()">exit_to_app</mat-icon>
+      </button>
+
 
     </mat-card-header>
 

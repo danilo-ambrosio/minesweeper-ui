@@ -8,6 +8,10 @@ import { MouseClick } from '../model/cell/MouseClick';
 import { CellOperationBuilder } from '../model/cell/CellOperationBuilder';
 import { CellOperation } from '../model/cell/CellOperation';
 import { ToastrService } from 'ngx-toastr';
+import { GameStatusTransition } from '../model/GameStatusTransition';
+import { Timer } from '../helpers/Timer';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-game-board',
@@ -15,35 +19,58 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./game-board.component.css']
 })
 export class GameBoardComponent implements OnInit {
-  
+
   game: Game;
   preferences: Preferences;
+  timer: Timer;
+  username: string;
 
-  constructor(private gameService: GameService, private toastrService: ToastrService) {
-    this.game = Game.empty();
-    this.preferences = new Preferences(3, 5, 7);
+  constructor(private gameService: GameService, private toastrService: ToastrService, private userService: UserService, private router: Router) {
+    this.clear();
+    this.username = this.userService.authenticatedUsername();
   }
 
   ngOnInit(): void {
   }
 
+  clear() {
+    this.timer = new Timer(0);
+    this.game = Game.empty();
+    this.preferences = new Preferences(3, 5, 7);
+  }
+
   start() {
-    this.gameService.configure(this.preferences).subscribe((configuredGame) =>{
+    this.gameService.configure(this.preferences).subscribe((configuredGame) => {
       this.game = Game.from(configuredGame);
-      console.log(this.game);
+      this.timer = this.timer.start(0);
+    });
+  }
+
+  resume() {
+    const statusTransition = new GameStatusTransition("GAME_CONTINUATION");
+    this.gameService.changeStatus(this.game.id, statusTransition).subscribe((resumedGame) => {
+      this.game = Game.from(resumedGame);
+    });
+  }
+
+  stop() {
+    const statusTransition = new GameStatusTransition("GAME_PRESERVATION");
+    this.gameService.changeStatus(this.game.id, statusTransition).subscribe(() => {
+      this.toastrService.success("Game preserved!");
+      this.clear();
     });
   }
 
   uncoverCell(row: Row, cell: Cell) {
-    if(cell.status != Cell.Status.UNCOVERED) {
-      this.dispatchCellOperation(CellOperationBuilder.build(row.index, cell.index, cell.status, 10, MouseClick.Left));
+    if (cell.status != Cell.Status.UNCOVERED) {
+      this.dispatchCellOperation(CellOperationBuilder.build(row.index, cell.index, cell.status, MouseClick.Left));
     }
   }
 
   placeCellIndicator(row: Row, cell: Cell, mouseEvent: MouseEvent) {
     mouseEvent.preventDefault();
-    if(cell.status != Cell.Status.UNCOVERED) {
-      this.dispatchCellOperation(CellOperationBuilder.build(row.index, cell.index, cell.status, 10, MouseClick.Right));
+    if (cell.status != Cell.Status.UNCOVERED) {
+      this.dispatchCellOperation(CellOperationBuilder.build(row.index, cell.index, cell.status, MouseClick.Right));
     }
   }
 
@@ -55,19 +82,32 @@ export class GameBoardComponent implements OnInit {
 
   handleUpdatedGame(updatedGame) {
     this.game = Game.from(updatedGame);
-    if(this.game.isWon()) {
-      this.toastrService.success("You won!", "", {positionClass: "toast-top-center"});
+    if (this.game.isWon()) {
+      this.toastrService.success("You won!", "", { positionClass: "toast-top-center" });
     }
-    if(this.game.isLost()) {
-      this.toastrService.warning("You lose!", "", {positionClass: "toast-top-center"});
+    if (this.game.isLost()) {
+      this.toastrService.warning("You lose!", "", { positionClass: "toast-top-center" });
     }
+    if (this.game.isOver()) {
+      this.timer.stop();
+    }
+  }
+
+  logout() {
+    this.userService.removeAuthenticatedUser();
+    window.location.reload();
+  }
+
+  userTooltip() {
+    return `Logged as ${this.username}`;
   }
 
   hasOngoingGame() {
     return !this.game.isOver();
   }
-  
+
   hasGame() {
     return !this.game.isEmpty();
   }
+
 }

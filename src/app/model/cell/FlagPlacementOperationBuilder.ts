@@ -5,8 +5,8 @@ import { Cell } from "./Cell";
 
 export class FlagPlacementOperationBuilder implements CellOperationBuilder {
 
-    build(rowIndex: Number, cellIndex: Number, timeElapsed: Number): CellOperation {
-        return new CellOperation(rowIndex, cellIndex, CellOperation.FLAG_PLACEMENT, timeElapsed);
+    build(rowIndex: Number, cellIndex: Number): CellOperation {
+        return new CellOperation(rowIndex, cellIndex, CellOperation.FLAG_PLACEMENT);
     }
 
     canBuild(cellStatus: string, mouseEvent: MouseClick): Boolean {
